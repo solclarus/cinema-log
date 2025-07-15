@@ -15,10 +15,10 @@ struct MovieDetailView: View {
     
     @State private var showingAddRecord = false
     @State private var showingWatchlistAlert = false
+    @State private var showingWatchlistSheet = false
     
     private var isInWatchlist: Bool {
-        // ウォッチリスト判定（後で実装）
-        false
+        WatchlistService.isInWatchlist(movie: movie, in: modelContext)
     }
     
     var body: some View {
@@ -41,10 +41,14 @@ struct MovieDetailView: View {
                 HStack(spacing: 16) {
                     // Watchlist button
                     Button {
-                        showingWatchlistAlert = true
+                        if isInWatchlist {
+                            WatchlistService.removeFromWatchlist(movie: movie, in: modelContext)
+                        } else {
+                            showingWatchlistSheet = true
+                        }
                     } label: {
                         Image(systemName: isInWatchlist ? "bookmark.fill" : "bookmark")
-                            .foregroundColor(Color.themeOrange)
+                            .foregroundColor(isInWatchlist ? Color.themeOrange : Color.themeTextSecondary)
                     }
                     
                     // Add viewing record button
@@ -60,13 +64,8 @@ struct MovieDetailView: View {
         .sheet(isPresented: $showingAddRecord) {
             ViewingRecordFormView.createMode(for: movie)
         }
-        .alert("ウォッチリスト", isPresented: $showingWatchlistAlert) {
-            Button("追加") {
-                // ウォッチリスト追加処理（後で実装）
-            }
-            Button("キャンセル", role: .cancel) { }
-        } message: {
-            Text("この映画をウォッチリストに追加しますか？")
+        .sheet(isPresented: $showingWatchlistSheet) {
+            WatchlistFormView(movie: movie)
         }
     }
     
