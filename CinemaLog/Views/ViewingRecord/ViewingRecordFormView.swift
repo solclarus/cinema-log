@@ -130,13 +130,13 @@ struct ViewingRecordFormView: View {
                 if let year = movie.releaseYear {
                     Text(year)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
                 
                 if !movie.genreText.isEmpty {
                     Text(movie.genreText)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .lineLimit(1)
                 }
             }
@@ -214,7 +214,7 @@ struct RatingPicker: View {
                     rating = star
                 } label: {
                     Image(systemName: star <= rating ? "star.fill" : "star")
-                        .foregroundColor(star <= rating ? .yellow : .gray)
+                        .foregroundColor(star <= rating ? Color.themeYellow : Color.themeTextSecondary)
                         .font(.title2)
                 }
             }
@@ -279,15 +279,15 @@ struct MovieSelectionView: View {
         VStack(spacing: 20) {
             Image(systemName: "film")
                 .font(.system(size: 50))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("映画がありません")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("先にサンプルデータを作成するか、\n映画を追加してください")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -314,13 +314,13 @@ struct MovieSelectionView: View {
                 if let year = movie.releaseYear {
                     Text(year)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
                 
                 if !movie.genreText.isEmpty {
                     Text(movie.genreText)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .lineLimit(1)
                 }
                 
@@ -329,8 +329,8 @@ struct MovieSelectionView: View {
                         .font(.caption2)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.blue.opacity(0.2))
-                        .foregroundColor(.blue)
+                        .background(Color.themeAccent.opacity(0.2))
+                        .foregroundColor(Color.themeAccent)
                         .cornerRadius(4)
                 }
             }
@@ -369,6 +369,7 @@ extension ViewingRecordFormView {
     
     return ViewingRecordFormView.createMode(for: movie)
         .modelContainer(container)
+        
 }
 
 #Preview("編集") {
@@ -384,4 +385,5 @@ extension ViewingRecordFormView {
     
     return ViewingRecordFormView.editMode(record: record)
         .modelContainer(container)
+        
 }

@@ -14,14 +14,14 @@ struct StatisticsView: View {
         NavigationStack {
             VStack {
                 Text("Statistics")
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color.themeTextPrimary)
             }
             .navigationTitle("Statistics")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Image(systemName: "chart.pie")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.themeAccent)
                 }
             }
         }

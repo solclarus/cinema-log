@@ -10,6 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @AppStorage("isDarkMode") private var isDarkMode = false
     @Query private var movies: [Movie]
 
     var body: some View {
@@ -34,6 +35,7 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 

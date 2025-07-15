@@ -56,7 +56,7 @@ struct RecordsView: View {
                                 selectedDisplayMode = mode
                             } label: {
                                 Image(systemName: mode.systemImage)
-                                    .foregroundColor(selectedDisplayMode == mode ? .blue : .secondary)
+                                    .foregroundColor(selectedDisplayMode == mode ? Color.themeAccent : Color.themeTextSecondary)
                                     .font(.headline)
                             }
                         }
@@ -71,15 +71,15 @@ struct RecordsView: View {
         VStack(spacing: 20) {
             Image(systemName: "film")
                 .font(.system(size: 60))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
 
             Text("鑑賞記録がありません")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
 
             Text("映画を見たら、映画詳細画面から記録を追加してみましょう")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

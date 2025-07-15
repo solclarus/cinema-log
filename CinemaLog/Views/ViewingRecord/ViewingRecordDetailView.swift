@@ -44,7 +44,7 @@ struct ViewingRecordDetailView: View {
                         showingEditView = true
                     } label: {
                         Image(systemName: "pencil")
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.themeAccent)
                     }
                 }
             }
@@ -88,20 +88,20 @@ struct ViewingRecordDetailView: View {
                     if let year = record.movie?.releaseYear {
                         Text(year)
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                     }
                     
                     if let genres = record.movie?.genres, !genres.isEmpty {
                         Text(genres.joined(separator: ", "))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                             .lineLimit(2)
                     }
                     
                     if let director = record.movie?.director {
                         Text("監督: \(director)")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                     }
                     
                     Spacer()
@@ -110,7 +110,7 @@ struct ViewingRecordDetailView: View {
                 Spacer()
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(Color.themeBackground)
         }
     }
     
@@ -147,7 +147,7 @@ struct ViewingRecordDetailView: View {
                     
                     Text("\(record.rating)/5")
                         .font(.title2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
             }
             
@@ -160,7 +160,7 @@ struct ViewingRecordDetailView: View {
                 
                 Text(record.fullFormattedDate)
                     .font(.title3)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.themeTextSecondary)
             }
             
             // Rewatch Badge
@@ -175,7 +175,7 @@ struct ViewingRecordDetailView: View {
             }
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(Color.themeSecondaryBackground)
     }
     
     private var additionalInfoSection: some View {
@@ -208,11 +208,11 @@ struct ViewingRecordDetailView: View {
             Text(record.notes ?? "")
                 .font(.body)
                 .padding()
-                .background(Color(.tertiarySystemBackground))
+                .background(Color.themeTertiaryBackground)
                 .cornerRadius(8)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.themeBackground)
     }
     
     private var movieStatsSection: some View {
@@ -241,12 +241,12 @@ struct ViewingRecordDetailView: View {
                     }
                 }
                 .padding()
-                .background(Color(.tertiarySystemBackground))
+                .background(Color.themeTertiaryBackground)
                 .cornerRadius(8)
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.themeBackground)
     }
     
     private func detailRow(title: String, value: String, icon: String) -> some View {
@@ -257,7 +257,7 @@ struct ViewingRecordDetailView: View {
             
             Text(title)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Spacer()
             
@@ -266,14 +266,14 @@ struct ViewingRecordDetailView: View {
                 .fontWeight(.medium)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.themeBackground)
     }
     
     private func statsRow(title: String, value: String) -> some View {
         HStack {
             Text(title)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Spacer()
             
@@ -317,4 +317,5 @@ struct ViewingRecordDetailView: View {
         ViewingRecordDetailView(record: record)
     }
     .modelContainer(container)
+    
 }

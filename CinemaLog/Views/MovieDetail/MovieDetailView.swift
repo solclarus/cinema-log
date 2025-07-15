@@ -44,7 +44,7 @@ struct MovieDetailView: View {
                         showingWatchlistAlert = true
                     } label: {
                         Image(systemName: isInWatchlist ? "bookmark.fill" : "bookmark")
-                            .foregroundColor(.orange)
+                            .foregroundColor(Color.themeOrange)
                     }
                     
                     // Add viewing record button
@@ -52,7 +52,7 @@ struct MovieDetailView: View {
                         showingAddRecord = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.themeAccent)
                     }
                 }
             }
@@ -96,20 +96,20 @@ struct MovieDetailView: View {
                     if let year = movie.releaseYear {
                         Text(year)
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                     }
                     
                     if let genres = movie.genres, !genres.isEmpty {
                         Text(genres.joined(separator: ", "))
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                             .lineLimit(2)
                     }
                     
                     if let director = movie.director {
                         Text("監督: \(director)")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.themeTextSecondary)
                     }
                     
                     // Statistics if viewed
@@ -118,7 +118,7 @@ struct MovieDetailView: View {
                             HStack {
                                 Text("鑑賞回数:")
                                     .font(.caption)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(Color.themeTextSecondary)
                                 Text("\(movie.totalViewings)回")
                                     .font(.caption)
                                     .fontWeight(.medium)
@@ -128,13 +128,13 @@ struct MovieDetailView: View {
                                 HStack {
                                     Text("平均評価:")
                                         .font(.caption)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(Color.themeTextSecondary)
                                     Text(String(format: "%.1f", avgRating))
                                         .font(.caption)
                                         .fontWeight(.medium)
                                     Text("★")
                                         .font(.caption)
-                                        .foregroundColor(.yellow)
+                                        .foregroundColor(Color.themeYellow)
                                 }
                             }
                         }
@@ -148,7 +148,7 @@ struct MovieDetailView: View {
             }
             .padding()
         }
-        .background(Color(.systemBackground))
+        .background(Color.themeBackground)
     }
     
     private var movieDetailsView: some View {
@@ -163,7 +163,7 @@ struct MovieDetailView: View {
                         .lineSpacing(2)
                 }
                 .padding()
-                .background(Color(.secondarySystemBackground))
+                .background(Color.themeSecondaryBackground)
             }
             
             if let cast = movie.cast, !cast.isEmpty {
@@ -173,10 +173,10 @@ struct MovieDetailView: View {
                     
                     Text(cast.joined(separator: ", "))
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
                 .padding()
-                .background(Color(.secondarySystemBackground))
+                .background(Color.themeSecondaryBackground)
             }
         }
     }
@@ -192,7 +192,7 @@ struct MovieDetailView: View {
                 if movie.totalViewings > 0 {
                     Text("\(movie.totalViewings)件")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
             }
             .padding(.horizontal)
@@ -201,11 +201,11 @@ struct MovieDetailView: View {
                 VStack(spacing: 12) {
                     Image(systemName: "film")
                         .font(.system(size: 40))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                     
                     Text("まだ鑑賞記録がありません")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                     
                     Button("記録を追加") {
                         showingAddRecord = true
@@ -214,7 +214,7 @@ struct MovieDetailView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 32)
-                .background(Color(.tertiarySystemBackground))
+                .background(Color.themeTertiaryBackground)
             } else {
                 LazyVStack(spacing: 8) {
                     ForEach(movie.viewingRecords.sorted(by: { $0.viewingDate > $1.viewingDate })) { record in
@@ -239,13 +239,13 @@ struct MovieDetailView: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
+                .background(Color.themeAccent)
                 .cornerRadius(10)
             }
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .background(Color(.systemBackground))
+        .background(Color.themeBackground)
     }
     
     private var posterURL: URL? {
@@ -282,7 +282,7 @@ struct ViewingRecordSummaryRow: View {
                 if let notes = record.shortNotes {
                     Text(notes)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .lineLimit(2)
                 }
             }
@@ -291,10 +291,10 @@ struct ViewingRecordSummaryRow: View {
             
             Image(systemName: "chevron.right")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
         }
         .padding()
-        .background(Color(.tertiarySystemBackground))
+        .background(Color.themeTertiaryBackground)
         .cornerRadius(8)
     }
 }
@@ -320,4 +320,5 @@ struct ViewingRecordSummaryRow: View {
         MovieDetailView(movie: movie)
     }
     .modelContainer(container)
+    
 }

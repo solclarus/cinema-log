@@ -66,7 +66,7 @@ struct DiscoverView: View {
                         // フィルター機能（後で実装）
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.themeAccent)
                     }
                 }
             }
@@ -87,7 +87,7 @@ struct DiscoverView: View {
     private var searchBar: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             TextField("映画を検索...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -124,15 +124,15 @@ struct DiscoverView: View {
         VStack(spacing: 20) {
             Image(systemName: "bookmark")
                 .font(.system(size: 60))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("ウォッチリスト")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("気になる映画をウォッチリストに追加しましょう")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -142,15 +142,15 @@ struct DiscoverView: View {
         VStack(spacing: 20) {
             Image(systemName: "tv")
                 .font(.system(size: 60))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("今見れる映画")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("ストリーミングサービスの設定後に\n視聴可能な映画を表示します")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -160,15 +160,15 @@ struct DiscoverView: View {
         VStack(spacing: 20) {
             Image(systemName: "film")
                 .font(.system(size: 60))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("映画がありません")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("サンプルデータを作成して映画を表示しましょう")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
             
             Button("サンプルデータを作成") {
@@ -183,15 +183,15 @@ struct DiscoverView: View {
         VStack(spacing: 20) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 60))
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("検索結果が見つかりません")
                 .font(.title2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Text("「\(searchText)」に一致する映画が見つかりませんでした")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -252,13 +252,13 @@ struct MovieGridItem: View {
                 if let year = movie.releaseYear {
                     Text(year)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                 }
                 
                 if !movie.genreText.isEmpty {
                     Text(movie.genreText)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .lineLimit(1)
                 }
                 
@@ -267,11 +267,11 @@ struct MovieGridItem: View {
                     HStack {
                         Image(systemName: "eye.fill")
                             .font(.caption2)
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.themeAccent)
                         
                         Text("\(movie.totalViewings)回鑑賞")
                             .font(.caption2)
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color.themeAccent)
                         
                         if let avgRating = movie.averageRating {
                             Spacer()
@@ -279,10 +279,10 @@ struct MovieGridItem: View {
                             HStack(spacing: 1) {
                                 Image(systemName: "star.fill")
                                     .font(.caption2)
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(Color.themeYellow)
                                 Text(String(format: "%.1f", avgRating))
                                     .font(.caption2)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(Color.themeTextSecondary)
                             }
                         }
                     }

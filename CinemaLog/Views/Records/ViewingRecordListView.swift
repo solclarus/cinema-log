@@ -58,7 +58,7 @@ fileprivate struct ViewingRecordRow: View {
                 
                 Text(record.formattedDate)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.themeTextSecondary)
                 
                 HStack {
                     Text(record.ratingStars)
@@ -78,7 +78,7 @@ fileprivate struct ViewingRecordRow: View {
                 if let notes = record.shortNotes {
                     Text(notes)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .lineLimit(2)
                 }
             }
@@ -109,4 +109,5 @@ fileprivate struct ViewingRecordRow: View {
         ViewingRecordListView()
     }
     .modelContainer(container)
+    
 }

@@ -73,7 +73,7 @@ struct ViewingRecordCalendarView: View {
             }
         }
         .padding(.vertical)
-        .background(Color(.secondarySystemBackground))
+        .background(Color.themeSecondaryBackground)
     }
     
     // MARK: - Helper Properties
@@ -126,7 +126,7 @@ struct CalendarGrid: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.title2)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.themeAccent)
                 }
                 
                 Spacer()
@@ -144,7 +144,7 @@ struct CalendarGrid: View {
                 } label: {
                     Image(systemName: "chevron.right")
                         .font(.title2)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.themeAccent)
                 }
             }
             
@@ -154,7 +154,7 @@ struct CalendarGrid: View {
                 ForEach(["日", "月", "火", "水", "木", "金", "土"], id: \.self) { dayKey in
                     Text(dayKey)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.themeTextSecondary)
                         .frame(height: 30)
                 }
                 
@@ -222,7 +222,7 @@ struct CalendarDay: View {
                 // Selection indicator
                 if calendar.isDate(date, inSameDayAs: selectedDate) {
                     Circle()
-                        .stroke(Color.blue, lineWidth: 2)
+                        .stroke(Color.themeAccent, lineWidth: 2)
                         .frame(width: 32, height: 32)
                 }
                 
@@ -249,14 +249,14 @@ struct CalendarDay: View {
     
     private var dayTextColor: Color {
         if calendar.isDate(date, inSameDayAs: selectedDate) {
-            return .primary
+            return Color.themeTextPrimary
         }
         
         if !calendar.isDate(date, equalTo: currentMonth, toGranularity: .month) {
-            return .secondary
+            return Color.themeTextSecondary
         }
         
-        return recordCount > 0 ? .white : .primary
+        return recordCount > 0 ? .white : Color.themeTextPrimary
     }
 }
 
@@ -265,7 +265,7 @@ struct CalendarHeatmapLegend: View {
         HStack {
             Text("鑑賞記録の多い日:")
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             HStack(spacing: 4) {
                 // Light activity
@@ -286,7 +286,7 @@ struct CalendarHeatmapLegend: View {
             
             Text("多")
                 .font(.caption2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Spacer()
         }
@@ -354,4 +354,5 @@ fileprivate struct CompactRecordCard: View {
         ViewingRecordCalendarView()
     }
     .modelContainer(container)
+    
 }

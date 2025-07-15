@@ -55,7 +55,7 @@ struct ViewingRecordPosterView: View {
         HStack {
             Text("並び順:")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
             
             Button {
                 showingSortSheet = true
@@ -68,17 +68,17 @@ struct ViewingRecordPosterView: View {
                     Image(systemName: "chevron.down")
                         .font(.caption2)
                 }
-                .foregroundColor(.blue)
+                .foregroundColor(Color.themeAccent)
             }
             
             Spacer()
             
             Text("\(viewingRecords.count)件")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.themeTextSecondary)
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(Color.themeSecondaryBackground)
         .confirmationDialog("並び順を選択", isPresented: $showingSortSheet) {
             ForEach(SortOption.allCases, id: \.self) { option in
                 Button {
@@ -217,4 +217,5 @@ fileprivate struct PosterGridItem: View {
         ViewingRecordPosterView()
     }
     .modelContainer(container)
+    
 }
