@@ -7,37 +7,6 @@
 
 import SwiftUI
 
-class ThemeManager: ObservableObject {
-    @Published var isDarkMode: Bool = false {
-        didSet {
-            print("ThemeManager: isDarkMode changed to \(isDarkMode)")
-            userDefaults.set(isDarkMode, forKey: darkModeKey)
-        }
-    }
-    
-    private let userDefaults = UserDefaults.standard
-    private let darkModeKey = "isDarkMode"
-    
-    init() {
-        // Load saved theme preference without triggering didSet
-        let savedValue = userDefaults.bool(forKey: darkModeKey)
-        print("ThemeManager: Loading saved value: \(savedValue)")
-        _isDarkMode = Published(initialValue: savedValue)
-    }
-    
-    func toggleTheme() {
-        isDarkMode.toggle()
-    }
-    
-    func setTheme(_ isDark: Bool) {
-        isDarkMode = isDark
-    }
-    
-    var colorScheme: ColorScheme? {
-        return isDarkMode ? .dark : .light
-    }
-}
-
 // MARK: - Color Theme Extensions
 
 extension Color {
