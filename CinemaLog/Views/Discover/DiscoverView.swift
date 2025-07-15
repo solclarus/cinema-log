@@ -11,6 +11,7 @@ import SwiftUI
 struct DiscoverView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var movies: [Movie]
+    @Query private var watchlistItems: [WatchlistItem]
     
     @State private var selectedTab: DiscoverTab = .popular
     @State private var searchText = ""
@@ -121,12 +122,22 @@ struct DiscoverView: View {
     }
     
     private var watchlistView: some View {
+        Group {
+            if watchlistItems.isEmpty {
+                emptyWatchlistView
+            } else {
+                watchlistGridView
+            }
+        }
+    }
+    
+    private var emptyWatchlistView: some View {
         VStack(spacing: 20) {
             Image(systemName: "bookmark")
                 .font(.system(size: 60))
                 .foregroundColor(Color.themeTextSecondary)
             
-            Text("ウォッチリスト")
+            Text("ウォッチリストは空です")
                 .font(.title2)
                 .foregroundColor(Color.themeTextSecondary)
             
@@ -136,6 +147,50 @@ struct DiscoverView: View {
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var watchlistGridView: some View {
+        ScrollView {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
+                ForEach(sortedWatchlistItems) { item in
+                    if let movie = item.movie {
+                        NavigationLink(destination: MovieDetailView(movie: movie)) {
+                            WatchlistMovieGridItem(movie: movie, item: item)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .contextMenu {
+                            Button(action: {
+                                WatchlistService.removeFromWatchlist(movie: movie, in: modelContext)
+                            }) {
+                                Label("ウォッチリストから削除", systemImage: "bookmark.slash")
+                            }
+                            
+                            Button(action: {
+                                // Mark as watched functionality could be added here
+                            }) {
+                                Label("鑑賞済みにする", systemImage: "eye.fill")
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+        }
+    }
+    
+    private var sortedWatchlistItems: [WatchlistItem] {
+        let filtered = watchlistItems.filter { item in
+            if searchText.isEmpty { return true }
+            return item.movie?.title.localizedCaseInsensitiveContains(searchText) ?? false
+        }
+        
+        return filtered.sorted { item1, item2 in
+            if item1.priority.sortOrder != item2.priority.sortOrder {
+                return item1.priority.sortOrder < item2.priority.sortOrder
+            }
+            return item1.addedDate > item2.addedDate
+        }
     }
     
     private var availableMoviesView: some View {
@@ -290,6 +345,118 @@ struct MovieGridItem: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var posterURL: URL? {
+        guard let posterPath = movie.posterURL else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/w342\(posterPath)")
+    }
+}
+
+struct WatchlistMovieGridItem: View {
+    let movie: Movie
+    let item: WatchlistItem
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ZStack {
+                // Poster
+                AsyncImage(url: posterURL) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .overlay(
+                            VStack {
+                                Image(systemName: "photo")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.gray)
+                                Text("ポスター")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                        )
+                }
+                .frame(height: 160)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                
+                // Priority badge
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        ZStack {
+                            Circle()
+                                .fill(priorityColor.opacity(0.9))
+                                .frame(width: 24, height: 24)
+                            
+                            Image(systemName: "flag.fill")
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                        }
+                        .padding(6)
+                    }
+                    
+                    Spacer()
+                }
+                
+                // Added date
+                VStack {
+                    Spacer()
+                    
+                    HStack {
+                        Text(item.shortFormattedAddedDate)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.black.opacity(0.7))
+                            .cornerRadius(6)
+                        
+                        Spacer()
+                    }
+                    .padding(6)
+                }
+            }
+            .shadow(radius: 4)
+            
+            // Movie info
+            VStack(alignment: .leading, spacing: 4) {
+                Text(movie.title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                
+                if let year = movie.releaseYear {
+                    Text(year)
+                        .font(.caption)
+                        .foregroundColor(Color.themeTextSecondary)
+                }
+                
+                if !movie.genreText.isEmpty {
+                    Text(movie.genreText)
+                        .font(.caption)
+                        .foregroundColor(Color.themeTextSecondary)
+                        .lineLimit(1)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var priorityColor: Color {
+        switch item.priority {
+        case .high:
+            return Color.themeOrange
+        case .medium:
+            return Color.themeOrange.opacity(0.7)
+        case .low:
+            return Color.themeOrange.opacity(0.4)
+        }
     }
     
     private var posterURL: URL? {
