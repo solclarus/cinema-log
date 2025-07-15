@@ -88,6 +88,7 @@
 		C599B3982E23BF3900697B2D = {
 			isa = PBXGroup;
 			children = (
+				C599B3D02E23C1B100697B2D /* Claude */,
 				C599B3A32E23BF3900697B2D /* CinemaLog */,
 				C599B3B52E23BF3D00697B2D /* CinemaLogTests */,
 				C599B3BF2E23BF3D00697B2D /* CinemaLogUITests */,
@@ -103,6 +104,13 @@
 				C599B3BC2E23BF3D00697B2D /* CinemaLogUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C599B3D02E23C1B100697B2D /* Claude */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Claude;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
